@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import "../App.css"
 
 
-export default function WeatherChart() {
+export default function WeatherChart2() {
     const [chart, setChart] = useState([]);
     
     useEffect(() => {
@@ -17,14 +17,13 @@ export default function WeatherChart() {
             const xml = parser.parseFromString(savedTextXML, "application/xml");
 
             const timeElements = xml.getElementsByTagName('time');
-            const data: Array<Array<any>> = [['Tiempo', 'Temperatura (kelvin)', 'Sensacion termica (kelvin)']];
+            const data: Array<Array<any>> = [['Tiempo', 'Humedad']];
 
             for (let i = 0; i < timeElements.length; i++) {
                 let from = timeElements[i].getAttribute('from').slice(11, 16);
-                let temperature = parseFloat(timeElements[i].getElementsByTagName('temperature')[0].getAttribute('value'));
-                let feels_like = parseFloat(timeElements[i].getElementsByTagName('feels_like')[0].getAttribute('value'));
+                let humidity = parseFloat(timeElements[i].getElementsByTagName('humidity')[0].getAttribute('value'));
 
-                data.push([from, temperature, feels_like]);
+                data.push([from, humidity]);
             }
 
             setChart(data);
@@ -32,11 +31,11 @@ export default function WeatherChart() {
     }, []);
 
     const options = {
-        title: ` Temperatura, Sensacion Termica vs Tiempo`,
+        title: `Humedad vs Tiempo`,
         curveType: "function",
         legend: { position: 'bottom' },
         hAxis: { title: 'Tiempo' },
-        vAxis: { title: 'Grados Kelvin' }
+        vAxis: { title: 'Porcentaje %' }
     };
 
     return (

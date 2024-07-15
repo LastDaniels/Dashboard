@@ -4,8 +4,10 @@ import Indicator from './components/Indicator';
 import Summary from './components/Summary';
 import BasicTable from './components/BasicTable';
 import WeatherChart from './components/WeatherChart';
+import WeatherChart2 from './components/WeatherChart2';
 import ControlPanel from './components/ControlPanel';
 import { useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography';
 
 function App() {
 	{/* Variable de estado y función de actualización */ }
@@ -91,19 +93,29 @@ function App() {
 
 			setIndicators(indicatorsElements)
 
-			let arrayObjects = Array.from( xml.getElementsByTagName("time") ).map( (timeElement) =>  {
-					
+			let arrayObjects = Array.from(xml.getElementsByTagName("time")).map((timeElement) => {
+
 				let rangeHours = timeElement.getAttribute("from").split("T")[1] + " - " + timeElement.getAttribute("to").split("T")[1]
 
-				let windDirection = timeElement.getElementsByTagName("windDirection")[0].getAttribute("deg") + " "+  timeElement.getElementsByTagName("windDirection")[0].getAttribute("code") 
-				   
-				return { "rangeHours": rangeHours,"windDirection": windDirection }
-			   
+				let windDirection = timeElement.getElementsByTagName("windDirection")[0].getAttribute("deg") + " " + timeElement.getElementsByTagName("windDirection")[0].getAttribute("code")
+				let windSpeed = timeElement.getElementsByTagName("windSpeed")[0].getAttribute("mps") + " " + timeElement.getElementsByTagName("windSpeed")[0].getAttribute("unit")
+				let windGust = timeElement.getElementsByTagName("windGust")[0].getAttribute("gust") + " " + timeElement.getElementsByTagName("windGust")[0].getAttribute("unit")
+				let temperature = timeElement.getElementsByTagName("temperature")[0].getAttribute("value") + " " + timeElement.getElementsByTagName("temperature")[0].getAttribute("unit")
+				let precipitation = timeElement.getElementsByTagName("precipitation")[0].getAttribute("probability")
+				let pressure = timeElement.getElementsByTagName("pressure")[0].getAttribute("value") + " " + timeElement.getElementsByTagName("pressure")[0].getAttribute("unit")
+				let humidity = timeElement.getElementsByTagName("humidity")[0].getAttribute("value") + " " + timeElement.getElementsByTagName("pressure")[0].getAttribute("unit")
+
+
+				return {
+					"rangeHours": rangeHours, "windDirection": windDirection, "windSpeed": windSpeed, "windGust": windGust, "temperature": temperature, "precipitation": precipitation, "pressure": pressure,
+					"humidity": humidity
+				}
+
 			})
 
-			arrayObjects = arrayObjects.slice(0,8)
-		   
-			{/* 3. Actualice de la variable de estado mediante la función de actualización */}
+			arrayObjects = arrayObjects.slice(0, 8)
+
+			{/* 3. Actualice de la variable de estado mediante la función de actualización */ }
 
 			setRowsTable(arrayObjects)
 
@@ -112,56 +124,50 @@ function App() {
 
 	return (
 
-		<Grid container spacing={5}>
 
-			<Grid xs={6} lg={2}>
 
+		<Grid container spacing={6}>
+			<Grid xs={12}>
+				<div className="weather-banner">
+					<Typography variant="h3" className="weather-header">
+						Weather Dashboard
+					</Typography>
+				</div>
+			</Grid>
+
+			<Grid xs={6} lg={6}>
 				{indicators[0]}
 
-				{/* <Indicator title='Precipitación' subtitle='Probabilidad' value={0.13} /> */}
-
 			</Grid>
-
-			<Grid xs={6} lg={2}>
-
+			<Grid xs={6} lg={6}>
 				{indicators[1]}
 
-				{/* <Indicator title='Precipitación' subtitle='Probabilidad' value={0.13} /> */}
-
 			</Grid>
-
-			<Grid xs={6} lg={2}>
-
+			<Grid xs={6} lg={6}>
 				{indicators[2]}
 
-				{/* <Indicator title='Precipitación' subtitle='Probabilidad' value={0.13} /> */}
-
 			</Grid>
-
-
-			<Grid xs={6} lg={2}>
-
+			<Grid xs={6} lg={6}>
 				{indicators[3]}
 
-				{/* <Indicator title='Precipitación' subtitle='Probabilidad' value={0.13} /> */}
-
 			</Grid>
 
+			<Grid xs={12} lg={12}>
+                <ControlPanel />
+            </Grid>
 
-			<Grid xs={12} sm={4} md={3} lg={4}><Summary></Summary></Grid>
+			<Grid xs={12} lg={12}>
 
-			<Grid xs={12} lg={8}>
+				{/* 4. Envíe la variable de estado (dataTable) como prop (input) del componente (BasicTable) */}
 
-             {/* 4. Envíe la variable de estado (dataTable) como prop (input) del componente (BasicTable) */}
+				<BasicTable rows={rowsTable}></BasicTable>
 
-             <BasicTable rows={rowsTable}></BasicTable>
-
-         </Grid>
-			<Grid xs={12} lg={2}>
-				<ControlPanel />
 			</Grid>
-			<Grid xs={12} lg={10}>
+			<Grid xs={6} lg={6}>
 				<WeatherChart></WeatherChart>
+			</Grid>
+			<Grid xs={6} lg={6}>
+				<WeatherChart2></WeatherChart2>
 			</Grid>
 
 

@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+.weather-banner {
+  background-image: url('https://cdn.pixabay.com/photo/2020/08/11/21/39/clouds-5481190_1280.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 50px 0;
+  text-align: center;
+  color: white;
+}
+
+.weather-header {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}

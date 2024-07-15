@@ -8,24 +8,6 @@ import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
 
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 interface Config {
   rows: Array<object>;
 }
@@ -50,7 +32,13 @@ export default function BasicTable(data: Config) {
         <TableHead>
           <TableRow>
             <TableCell>Rango de horas</TableCell>
-            <TableCell align="right">Dirección del viento</TableCell>
+            <TableCell>Dirección del viento</TableCell>
+            <TableCell>Velocidad del viento</TableCell>
+            <TableCell>Rafaga de viento</TableCell>
+            <TableCell>Temperatura</TableCell>
+            <TableCell>Precipitacion (Probabilidad)</TableCell>
+            <TableCell>Presion</TableCell>
+            <TableCell>Humedad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,7 +50,13 @@ export default function BasicTable(data: Config) {
               <TableCell component="th" scope="row">
                 {row.rangeHours}
               </TableCell>
-              <TableCell align="right">{row.windDirection}</TableCell>
+              <TableCell>{row.windDirection}</TableCell>
+              <TableCell>{row.windSpeed}</TableCell>
+              <TableCell>{row.windGust}</TableCell>
+              <TableCell>{row.temperature}</TableCell>
+              <TableCell>{row.precipitation}</TableCell>
+              <TableCell>{row.pressure}</TableCell>
+              <TableCell>{row.humidity}</TableCell>
 
             </TableRow>
           ))}
