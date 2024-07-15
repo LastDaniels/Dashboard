@@ -1,3 +1,4 @@
+import './App.css';
 import Grid from '@mui/material/Unstable_Grid2';
 import Indicator from './components/Indicator';
 import BasicTable from './components/BasicTable';
