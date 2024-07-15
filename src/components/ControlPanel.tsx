@@ -8,11 +8,11 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
-export default function ControlPanel() {
+export default function ControlPanel({ setSelectedVariable }) {
 
     {/* Variable de estado y función de actualización */}
 
-    let [selected, setSelected] = useState(-1)
+    let [, setSelected] = useState(-1)
 
     {/* Variable de referencia a un elemento */ }
 
@@ -40,6 +40,7 @@ export default function ControlPanel() {
 
         let idx = parseInt(event.target.value)
         setSelected( idx );
+        setSelectedVariable(items[idx].name)
 
         {/* Modificación de la referencia */}
 
